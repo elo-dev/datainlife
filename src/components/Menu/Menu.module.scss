@@ -1,0 +1,24 @@
+.container{
+  margin-right: 40px;
+  max-width: 200px;
+}
+
+.menu__item{
+  cursor: pointer;
+  background-color: #afe2ceed;
+  padding: 10px 15px;
+  white-space: nowrap;
+  &:hover{
+    background-color: #8cd3b6ed;
+  }
+  &:not(:last-child){
+    margin-bottom: 25px;
+  }
+}
+
+.item__text{
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+  color: black;
+}

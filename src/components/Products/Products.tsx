@@ -1,14 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './Products.module.scss'
 import { instance } from '../../network/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProductsAction } from '../../redux/actions'
 import { ProductLine } from '../ProductLine/ProductLine'
 import { IGoods, IProduct } from '../../redux/interface'
+import { useLocation } from 'react-router'
+import { Table } from './Table/Table'
 
 export const Products = () => {
+  const [section, setSection] = useState<IProduct[]>([])
+
   const { products } = useSelector((state: any) => state.products)
   const dispatch = useDispatch()
+
+  const location = useLocation()
 
   const getProducts = async () => {
     const data = await instance.get('get_products.php').then((res) => {
@@ -53,45 +59,34 @@ export const Products = () => {
     })
   }
 
+  const getProductsOfId = () => {
+    const urlId = location.pathname.slice(1)
+    const arr: IProduct[] = []
+    products.map((item: IProduct) => {
+      if (item.rid == +urlId) {
+        arr.push(item)
+      }
+    })
+    setSection(arr)
+  }
+
+  useEffect(() => {
+    getProductsOfId()
+  }, [location.pathname])
+
+  const RenderProduct = () => {
+    const urlId = location.pathname.slice(1)
+    if (urlId === '') {
+      return <Table products={products} setValue={setValue} />
+    } else {
+      return <Table products={section} setValue={setValue} />
+    }
+  }
+
   return (
     <>
       <div className={style.container}>
-        {products.map((item: IProduct) => (
-          <table className={style.products} key={item.rid}>
-            <caption className={style.products__title}>
-              <h1>{item.rname}</h1>
-            </caption>
-            <thead className={style.products__header}>
-              <tr>
-                <th>Id</th>
-                <th>Название товара</th>
-                <th>Цена</th>
-                <th>Количество</th>
-                <th>Сумма</th>
-              </tr>
-            </thead>
-            <tbody className={style.products__body}>
-              {item.goods.map((good: IGoods) => (
-                <tr key={good.gid}>
-                  <td>{good.gid}</td>
-                  <td>{good.gname}</td>
-                  <td>{good.gprice}</td>
-                  <td>
-                    <input
-                      type="number"
-                      placeholder="Колличество"
-                      value={good.quantity}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setValue(+e.target.value, good.gid)
-                      }
-                    />
-                  </td>
-                  <td>{good.gprice * good.quantity}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ))}
+        <RenderProduct />
       </div>
       <ProductLine />
     </>
