@@ -1,0 +1,28 @@
+.container{
+  position: fixed;
+  bottom: 0;
+  background-color: #afe2ceed;
+  width: 100%;
+  height: 45px;
+}
+
+.productLine{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 55%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.cart{
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 13px;
+  background-color: wheat;
+  border: 1px solid black;
+  border-radius: 5px;
+  &:hover{
+    background-color: rgb(243, 212, 155);
+  }
+}
