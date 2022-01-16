@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/datainlife/static/css/main.3cbf8fb8.css",
+    "main.js": "/datainlife/static/js/main.25da302c.js",
+    "index.html": "/datainlife/index.html",
+    "main.3cbf8fb8.css.map": "/datainlife/static/css/main.3cbf8fb8.css.map",
+    "main.25da302c.js.map": "/datainlife/static/js/main.25da302c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3cbf8fb8.css",
+    "static/js/main.25da302c.js"
+  ]
+}
